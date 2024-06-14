@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://dbhcq7o1p5lev"]
+
+[ext_resource type="ArrayMesh" uid="uid://cek8dv6gg4sql" path="res://Models/suzanne.res" id="1_ek7d7"]
+[ext_resource type="Shader" path="res://Shaders/dither_dissolve.gdshader" id="2_c4tvx"]
+[ext_resource type="Shader" path="res://Shaders/dither_dissolve_2d.gdshader" id="3_mhhxw"]
+[ext_resource type="Texture2D" uid="uid://deiryswek2ym" path="res://icon.svg" id="4_ddx3r"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mhbvh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5k63"]
+albedo_color = Color(0.220941, 0.220941, 0.220941, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_okpwa"]
+render_priority = 0
+shader = ExtResource("2_c4tvx")
+shader_parameter/opacity = 0.5
+shader_parameter/dither_scale = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6tiex"]
+shader = ExtResource("3_mhhxw")
+shader_parameter/opacity = 0.5
+shader_parameter/dither_scale = 2.0
+
+[node name="Scene" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_mhbvh")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5k63")
+
+[node name="monkey" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = ExtResource("1_ek7d7")
+surface_material_override/0 = SubResource("ShaderMaterial_okpwa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.830781, -0.228959, 0.507327, -0.321621, 0.546434, 0.773285, -0.454272, -0.805598, 0.380329, 0, 3.05696, 3.88459)
+shadow_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6tiex")
+texture = ExtResource("4_ddx3r")
